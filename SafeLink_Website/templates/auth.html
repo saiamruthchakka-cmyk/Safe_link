@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SafeLink · {{ 'Create account' if mode == 'register' else 'Sign in' }}</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body class="auth-body">
+<div class="auth-wrap">
+  <section class="auth-brand">
+    <div class="brand-mark">◇</div><div class="brand-name">SAFELINK</div><div class="brand-sub">SECURITY OPERATIONS CENTER</div>
+    <div class="auth-pitch"><span class="eyebrow">EVERYDAY CYBER SAFETY</span><h1>Pause before<br>you click.</h1><p>Inspect suspicious links and messages with clear, explainable warning signs.</p>
+    <div class="mini-stats"><div><strong>01</strong><span>Inspect URLs</span></div><div><strong>02</strong><span>Review messages</span></div><div><strong>03</strong><span>Learn safer habits</span></div></div></div>
+    <div class="auth-foot">Local rule-based analysis · No links are opened</div>
+  </section>
+  <section class="auth-panel">
+    <div class="mobile-brand"><span class="brand-mark">◇</span> SAFELINK</div>
+    <span class="eyebrow">{{ 'GET STARTED' if mode == 'register' else 'WELCOME BACK' }}</span>
+    <h2>{{ 'Create your account' if mode == 'register' else 'Sign in to SafeLink' }}</h2>
+    <p class="muted">{{ 'Create a personal workspace for your scans.' if mode == 'register' else 'Access your security workspace and scan history.' }}</p>
+    {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}{% for category,message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endif %}{% endwith %}
+    <form method="post" class="auth-form">
+      <label>Username</label><input name="username" autocomplete="username" minlength="3" maxlength="32" required placeholder="Choose a username">
+      <label>Password</label><input type="password" name="password" autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}" required placeholder="{{ 'At least 10 characters' if mode == 'register' else 'Enter your password' }}">
+      {% if mode == 'register' %}<p class="field-note">Use at least 10 characters. Never reuse an important password.</p>{% endif %}
+      <button class="btn primary full" type="submit">{{ 'Create account' if mode == 'register' else 'Sign in' }} <span>↗</span></button>
+    </form>
+    <p class="auth-switch">{{ 'Already have an account?' if mode == 'register' else 'New to SafeLink?' }} <a href="{{ url_for('login' if mode == 'register' else 'register') }}">{{ 'Sign in' if mode == 'register' else 'Create an account' }}</a></p>
+    <div class="privacy-note">Your scan history is separated by account. Avoid entering passwords, OTPs, or confidential information into scans.</div>
+  </section>
+</div></body></html>

@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>SafeLink · {{ title|default('Security Operations Center') }}</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
+<body><div class="app-shell">
+<aside class="sidebar"><a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark">◇</span><span><b>SAFELINK</b><small>SECURITY OPERATIONS</small></span></a>
+<div class="side-label">WORKSPACE</div>
+<nav>
+<a class="{{ 'active' if request.endpoint == 'dashboard' else '' }}" href="{{ url_for('dashboard') }}"><span>▦</span> Dashboard</a>
+<a class="{{ 'active' if request.endpoint == 'url_scanner' else '' }}" href="{{ url_for('url_scanner') }}"><span>↗</span> URL Scanner</a>
+<a class="{{ 'active' if request.endpoint == 'email_scanner' else '' }}" href="{{ url_for('email_scanner') }}"><span>✉</span> Email Scanner</a>
+<a class="{{ 'active' if request.endpoint == 'history' else '' }}" href="{{ url_for('history') }}"><span>◷</span> Scan History</a>
+<a class="{{ 'active' if request.endpoint == 'safety_guide' else '' }}" href="{{ url_for('safety_guide') }}"><span>♧</span> Safety Guide</a>
+<a class="{{ 'active' if request.endpoint == 'about' else '' }}" href="{{ url_for('about') }}"><span>ⓘ</span> About Project</a></nav>
+<div class="sidebar-bottom"><span class="status-dot"></span> LOCAL RULE ANALYSIS<p>Links are never opened.<br>Scans stay in your account history.</p><div class="side-user"><div class="avatar">{{ (session.get('username') or 'S')[0]|upper }}</div><div><b>{{ session.get('username') }}</b><small>Security analyst</small></div><form action="{{ url_for('logout') }}" method="post"><button class="logout-icon" title="Sign out" aria-label="Sign out">↪</button></form></div></div></aside>
+<main class="main"><header class="topbar"><div class="mobile-title"><span class="brand-mark">◇</span> SAFELINK</div><div class="crumb">SECURITY MONITORING <span>/</span> {{ title|default('Dashboard')|upper }}</div><div class="top-right"><span class="live"><i></i> PROTECTION WORKSPACE</span><div class="user-chip"><div class="avatar">{{ (session.get('username') or 'S')[0]|upper }}</div><span>{{ session.get('username') }}</span></div><form action="{{ url_for('logout') }}" method="post"><button class="btn ghost small">Sign out</button></form></div></header>
+<div class="content">
+{% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}{% for category,message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endif %}{% endwith %}
+{% block content %}{% endblock %}
+<footer>SAFELINK · EDUCATIONAL PROTOTYPE <span>A low score does not guarantee safety.</span></footer>
+</div></main></div><script src="{{ url_for('static', filename='app.js') }}"></script></body></html>
